@@ -10,6 +10,7 @@ HEADERS = {'X-TBA-Auth-Key': API_KEY}
 
 def analyze_2026_with_updates():
     events = requests.get("https://www.thebluealliance.com/api/v3/events/2026/keys", headers=HEADERS).json()
+    print(events)  # temp debug
 
     results = {
         "total_ties": 0,
@@ -99,7 +100,6 @@ def analyze_2026_with_updates():
                 f"RedActiveS1={red_active_s1} | BlueActiveS1={blue_active_s1} | Winner={winner}"
             )
 
-    # --- Tiebreaker summary ---
     print("\n\n" + "=" * 50)
     print("FRC 2026: SHIFT ORDER TIEBREAKER IMPACT")
     print("=" * 50)
@@ -112,7 +112,6 @@ def analyze_2026_with_updates():
     else:
         print("No ties found in the data.")
 
-    # --- Auto score distribution ---
     print("\n" + "=" * 50)
     print("AUTO SCORE DISTRIBUTION")
     print("=" * 50)
@@ -142,18 +141,13 @@ def analyze_2026_with_updates():
         print(f"  Highest tied auto score:         {tie_max} ({tie_max_match})")
         print(f"  % of ties that were 0-0:         {tie_zeros:.1f}%")
 
-    # --- Residual summary ---
     print("\n" + "=" * 50)
     print("RESIDUAL ANALYSIS (tied matches only)")
     print("=" * 50)
     r = results["residuals"]
-    if r:
-        total_residual = sum(x["residual"] for x in r)
-        avg_residual = total_residual / len(r)
-        print(f"Tied alliances with nonzero residuals: {len(r)}")
-        print(f"Average residual:                      {avg_residual:.3f} balls")
-        print(f"Total residual across dataset:         {total_residual} balls")
-    else:
-        print("No residuals found — all teleopCounts match shift sums exactly.")
-
+    total_residual = sum(x["residual"] for x in r)
+    avg_residual = total_residual / len(r)
+    print(f"Tied alliances with nonzero residuals: {len(r)}")
+    print(f"Average residual:                      {avg_residual:.3f} balls")
+    print(f"Total residual across dataset:         {total_residual} balls")
 analyze_2026_with_updates()
