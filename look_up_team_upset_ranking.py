@@ -8,7 +8,6 @@ def lookup_team(team_number, year=2025):
     with open(csv_name, newline='') as f:
         rows = list(csv.DictReader(f))
 
-    # Normalize input to match the "frc####" format in the data
     team_key = f"{team_number}"
 
     total_teams = len(rows)
@@ -53,7 +52,7 @@ def lookup_team(team_number, year=2025):
     print(f"\n  By Upset Win Count (total underdog matches won):")
     print(f"    Rank:        #{upset_win_count_rank} of {total_teams}")
     print(f"    Percentile:  {upset_win_count_percentile}th")
-    print(f"    Value:       {team_row['Upset Win Count']} wins out of {team_row['Underdog Match Count']} underdog matches")
+    print(f"    Value:       {team_row['Upset Win Count']} wins")
 
     print(f"\n  By Underdog Match Win Rate (% of underdog matches won):")
     print(f"    Rank:        #{underdog_win_rate_rank} of {total_teams}")
@@ -71,7 +70,6 @@ def lookup_team(team_number, year=2025):
 
 
 if __name__ == "__main__":
-    team = input("Enter team number (e.g. 254 or frc254): ").strip()
-    year = input("Enter year (default 2025): ").strip()
+    team = input("Enter team number: ").strip()
     year = 2025
     lookup_team(team, year)
